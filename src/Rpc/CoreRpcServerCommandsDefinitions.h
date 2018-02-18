@@ -305,8 +305,8 @@ struct COMMAND_RPC_STOP_DAEMON {
 };
 
 //
-struct COMMAND_RPC_GETBLOCKCOUNT {
-  typedef std::vector<std::string> request;
+struct COMMAND_RPC_GETBLOCKCOUNT {  
+  typedef EMPTY_STRUCT request;
 
   struct response {
     uint64_t count;
@@ -319,8 +319,15 @@ struct COMMAND_RPC_GETBLOCKCOUNT {
   };
 };
 
-struct COMMAND_RPC_GETBLOCKHASH {
-  typedef std::vector<uint64_t> request;
+struct COMMAND_RPC_GETBLOCKHASH {  
+  struct request {
+	uint64_t height;
+
+	void serialize(ISerializer &s) {
+		KV_MEMBER(height)
+	}
+  };
+
   typedef std::string response;
 };
 

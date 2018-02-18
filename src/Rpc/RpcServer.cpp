@@ -517,11 +517,7 @@ bool RpcServer::on_getblockcount(const COMMAND_RPC_GETBLOCKCOUNT::request& req, 
 }
 
 bool RpcServer::on_getblockhash(const COMMAND_RPC_GETBLOCKHASH::request& req, COMMAND_RPC_GETBLOCKHASH::response& res) {
-  if (req.size() != 1) {
-    throw JsonRpc::JsonRpcError{ CORE_RPC_ERROR_CODE_WRONG_PARAM, "Wrong parameters, expected height" };
-  }
-
-  uint32_t h = static_cast<uint32_t>(req[0]);
+  uint32_t h = static_cast<uint32_t>(req.height);
   Crypto::Hash blockId = m_core.getBlockHashByIndex(h - 1);
   if (blockId == NULL_HASH) {
     throw JsonRpc::JsonRpcError{ 
